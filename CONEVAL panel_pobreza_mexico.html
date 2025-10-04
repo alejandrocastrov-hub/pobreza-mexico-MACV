@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Pobreza en México 2008-2018</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Análisis de Pobreza en México 2008-2018</h1>
+
+    <!-- Gráfico 1: Evolución temporal -->
+    <div class="chart-container">
+        <h2>Evolución de la Pobreza en México (2008-2018)</h2>
+        <div id="chart1" style="width: 100%; height: 400px;"></div>
+    </div>
+
+    <!-- Gráfico 2: Carencias sociales -->
+    <div class="chart-container">
+        <h2>Comparación de Carencias Sociales 2008 vs 2018</h2>
+        <div id="chart2" style="width: 100%; height: 500px;"></div>
+    </div>
+
+    <!-- Gráfico 3: Mapa por entidades -->
+    <div class="chart-container">
+        <h2>Pobreza por Entidad Federativa (2018)</h2>
+        <div id="chart3" style="width: 100%; height: 500px;"></div>
+    </div>
+
+    <!-- Gráfico 4: Por zona y grupo étnico -->
+    <div class="chart-container">
+        <h2>Pobreza por Zona y Grupo Étnico (2018)</h2>
+        <div id="chart4" style="width: 100%; height: 400px;"></div>
+    </div>
+
+    <!-- Gráfico 5: Por grupos de edad -->
+    <div class="chart-container">
+        <h2>Pobreza por Grupos de Edad (2018)</h2>
+        <div id="chart5" style="width: 100%; height: 400px;"></div>
+    </div>
+
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart', 'bar', 'geochart']
+        });
+        google.charts.setOnLoadCallback(drawAllCharts);
+
+        function drawAllCharts() {
+            drawChart1();
+            drawChart2();
+            drawChart3();
+            drawChart4();
+            drawChart5();
+        }
+
+        function drawChart1() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Pobreza (%)', 'Pobreza Extrema (%)'],
+                [2008, 44.4, 11.0],
+                [2018, 41.9, 7.4]
+            ]);
+
+            var options = {
+                title: 'Evolución de Porcentajes de Pobreza 2008-2018 - Datos Oficiales CONEVAL',
+                curveType: 'none',
+                legend: { position: 'bottom' },
+                hAxis: { 
+                    title: 'Año',
+                    format: '####',
+                    ticks: [2008, 2018]
+                },
+                vAxis: { 
+                    title: 'Porcentaje (%)',
+                    viewWindow: { min: 0, max: 50 }
+                },
+                pointSize: 8,
+                lineWidth: 3,
+                colors: ['#4285F4', '#EA4335']
+            };
+
+            var chart1 = new google.visualization.LineChart(document.getElementById('chart1'));
+            chart1.draw(data, options);
+        }
+
+        function drawChart2() {
+            var data = google.visualization.arrayToDataTable([
+                ['Carencia Social', '2008', '2018'],
+                ['Rezago educativo', 21.9, 16.9],
+                ['Servicios de salud', 38.4, 16.2],
+                ['Seguridad social', 65.0, 57.3],
+                ['Calidad vivienda', 17.7, 11.1],
+                ['Servicios básicos', 22.9, 19.8],
+                ['Acceso alimentación', 21.7, 20.4]
+            ]);
+
+            var options = {
+                title: 'Evolución de Carencias Sociales (%) 2008-2018',
+                bars: 'horizontal',
+                hAxis: { 
+                    title: 'Porcentaje (%)',
+                    viewWindow: { min: 0, max: 70 }
+                },
+                legend: { position: 'top' },
+                colors: ['#4285F4', '#34A853']
+            };
+
+            var chart2 = new google.visualization.BarChart(document.getElementById('chart2'));
+            chart2.draw(data, options);
+        }
+
+        function drawChart3() {
+            var data = google.visualization.arrayToDataTable([
+                ['Estado', 'Pobreza (%)'],
+                ['Chiapas', 76.4],
+                ['Guerrero', 66.5],
+                ['Oaxaca', 66.4],
+                ['Veracruz', 61.8],
+                ['Puebla', 58.9],
+                ['Tabasco', 53.6],
+                ['Michoacán', 46.0],
+                ['San Luis Potosí', 43.4],
+                ['Guanajuato', 43.4],
+                ['Hidalgo', 43.8],
+                ['México', 42.7],
+                ['Zacatecas', 46.8],
+                ['Campeche', 46.2],
+                ['Nayarit', 34.8],
+                ['Sonora', 28.2],
+                ['Jalisco', 28.4],
+                ['Querétaro', 27.6],
+                ['Quintana Roo', 27.6],
+                ['Aguascalientes', 26.2],
+                ['Chihuahua', 26.3],
+                ['Tamaulipas', 35.1],
+                ['Coahuila', 22.5],
+                ['Sinaloa', 30.9],
+                ['Colima', 30.9],
+                ['Durango', 37.3],
+                ['Baja California', 23.3],
+                ['Ciudad de Mexico', 30.6],
+                ['Morelos', 50.8],
+                ['Yucatán', 40.8],
+                ['Tlaxcala', 48.4],
+                ['Nuevo León', 14.5],
+                ['Baja California Sur', 18.1]
+            ]);
+
+            var options = {
+                region: 'MX',
+                resolution: 'provinces',
+                colorAxis: {
+                    colors: ['#E8F5E8', '#4CAF50', '#388E3C', '#2E7D32', '#1B5E20']
+                },
+                backgroundColor: '#81d4fa',
+                datalessRegionColor: '#f8bbd0',
+                defaultColor: '#f5f5f5'
+            };
+
+            var chart3 = new google.visualization.GeoChart(document.getElementById('chart3'));
+            chart3.draw(data, options);
+        }
+
+        function drawChart4() {
+            var data = google.visualization.arrayToDataTable([
+                ['Categoría', 'Pobreza (%)'],
+                ['Zona Rural', 55.3],
+                ['Zona Urbana', 37.6],
+                ['Población Indígena', 74.9],
+                ['Población No Indígena', 39.4]
+            ]);
+
+            var options = {
+                title: 'Pobreza por Zona y Grupo Étnico (2018)',
+                legend: { position: 'none' },
+                hAxis: { 
+                    title: 'Categoría'
+                },
+                vAxis: { 
+                    title: 'Porcentaje (%)',
+                    viewWindow: { min: 0, max: 80 }
+                },
+                colors: ['#4285F4']
+            };
+
+            var chart4 = new google.visualization.ColumnChart(document.getElementById('chart4'));
+            chart4.draw(data, options);
+        }
+
+        function drawChart5() {
+            var data = google.visualization.arrayToDataTable([
+                ['Grupo de Edad', 'Pobreza Moderada', 'Pobreza Extrema'],
+                ['Menores 18 años', 40.3, 9.3],
+                ['12-29 años', 35.3, 7.1],
+                ['65+ años', 34.4, 6.8]
+            ]);
+
+            var options = {
+                title: 'Distribución de Pobreza por Grupos de Edad (2018)',
+                isStacked: true,
+                hAxis: { 
+                    title: 'Grupo de Edad'
+                },
+                vAxis: { 
+                    title: 'Porcentaje (%)',
+                    viewWindow: { min: 0, max: 60 }
+                },
+                legend: { position: 'top' },
+                colors: ['#4285F4', '#EA4335']
+            };
+
+            var chart5 = new google.visualization.ColumnChart(document.getElementById('chart5'));
+            chart5.draw(data, options);
+        }
+
+        window.addEventListener('resize', function() {
+            drawAllCharts();
+        });
+    </script>
+</body>
+</html>
